@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { RouteChildrenProps, Redirect } from "react-router";
+import { ROUTES_URLS } from "../App/routes";
 
 interface OAuthProps extends RouteChildrenProps {
   onSetToken: (token: string) => void;
@@ -8,5 +9,5 @@ interface OAuthProps extends RouteChildrenProps {
 export const OAuth: FunctionComponent<OAuthProps> = ({ location: { hash }, onSetToken }: OAuthProps) => {
   const token = hash.split('=')[1];
   onSetToken(token);
-  return <Redirect to={'/dashbodard'} />
+  return <Redirect to={ROUTES_URLS.DASHBOARD} />
 }
