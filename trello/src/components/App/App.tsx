@@ -1,18 +1,22 @@
 import * as React from 'react'
-import { Route, Link, Switch, Redirect, RouteChildrenProps, withRouter, RouteComponentProps } from 'react-router-dom'
+import { Header } from '../Header';
 import {setToLocalStorage, getFromLocalStorage} from '../../utils/'
 import { OAuth } from '../OAuth';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { AppRoute, routes, ROUTES_URLS, } from './routes';
 
+import { Route, Link, Switch, Redirect, RouteChildrenProps, withRouter, RouteComponentProps } from 'react-router-dom'
+
 import '../../styles/bace.scss'
-import styles from '../../styles/app.module.scss'
+import styles from '../../styles/app.module.scss';
+
+
 
 const TOKEN_STORAGE_KEY = 'TOKEN'
 
 const {REACT_APP_APY_KEY} = process.env
 
-interface Board {
+export interface Board {
     id: string;
     name: string;
     pinned: boolean;
@@ -45,44 +49,30 @@ class App extends React.Component<AppProps, AppState> {
 
     componentDidMount() {
         this.getToken()
-        this.getBoards()
                
     }
 
-    private async getBoards() {
-        const {token} = getFromLocalStorage<CustomToken>(TOKEN_STORAGE_KEY)
-        const response = await fetch(`https://api.trello.com/1/members/me/boards?fields=name,url&key=${REACT_APP_APY_KEY}&token=${token}`);
-        if(response.ok === true && response.status === 200) {
-            const boards = await response.json();
-            console.log(boards,"data")
-            return this.setBoards(boards)         
-        }  
-    }
-
-    private setBoards(boards: Array<Board>) {
-        this.setState({boards})    
-    }
+    
 
     private async getToken() {
-        if(this.state.token) {
-            return
-        }
+        // if(this.state.token) {
+        //     return
+        // }
 
-        const {token} = getFromLocalStorage<CustomToken>(TOKEN_STORAGE_KEY)
-        if(!token) {
-            return this.toLogin()
-        }
+        // const {token} = getFromLocalStorage<CustomToken>(TOKEN_STORAGE_KEY)
+        // if(!token) {
+        //     return this.toLogin()
+        // }
 
-        const url = `https://api.trello.com/1/members/me?key=${REACT_APP_APY_KEY}&token=${token}`
-        const repsonse = await fetch(url);
-        if(repsonse.ok === true && repsonse.status === 200) {
-            const userProfile = await repsonse.json()
-            this.setProfile(userProfile)
-            this.setToken(token)
-            return this.toDashBoard()
-        }
+        // const url = `https://api.trello.com/1/members/me?key=${REACT_APP_APY_KEY}&token=${token}`
+        // const repsonse = await fetch(url);
+        // if(repsonse.ok === true && repsonse.status === 200) {
+        //     const userProfile = await repsonse.json()
+        //     this.setProfile(userProfile)
+        //     return this.toDashBoard()
+        // }
 
-        return this.toLogin()
+        // return this.toLogin()
     }
 
     private toDashBoard() {
@@ -97,36 +87,21 @@ class App extends React.Component<AppProps, AppState> {
         this.setState({userProfile})
     }
 
-    private  setToken = (token: string) => {
-        this.setState({token})
-        setToLocalStorage<CustomToken>(TOKEN_STORAGE_KEY, {token, expireIn: Date.now() })
-    }
+
 
 
     private get isLoggedIn() {
         return !!this.state.token
     }
 
-    private logOut = () =>{
-        this.setState(INITIAL_STATE)
-        this.toLogin()
-    }
-
-    private renderHeader() {
-        return <header className={styles.header}>
-                    {routes.map((route: AppRoute, i: number) => route.isHidden ? null : <Link className={styles.link} key={i} to={route.path}>{route.title}</Link>)}
-                    <button onClick={this.logOut}>Log out</button>
-                </header>
-    }
 
     private renderContent() {
-        return <main>
+        return <main className={styles.main}>
             <Switch>
                 {routes.map(this.renderRoute)}
-                <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} onSetToken={this.setToken} />} />
+                <Route path={ROUTES_URLS.OAUTH} render={(props: RouteChildrenProps) => <OAuth {...props} />} />
                 <Redirect to={ROUTES_URLS.NOT_FOUND}/>     
-            </Switch>
-            
+            </Switch>        
         </main>
         
     }
@@ -138,8 +113,7 @@ class App extends React.Component<AppProps, AppState> {
                     key={i} 
                     path={route.path} 
                     render={route.render} 
-                    isAuthenticated={this.isLoggedIn}
-
+                    
                     />   
         } else {
             return <Route 
@@ -154,7 +128,7 @@ class App extends React.Component<AppProps, AppState> {
         return(
             <div className="page">
                 
-                {this.renderHeader()}
+                <Header onLogOut={() => console.log('log')} />
                 {this.renderContent()}   
             </div>
         )
