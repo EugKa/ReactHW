@@ -1,20 +1,16 @@
 import * as React from 'react'
 import { Header } from '../Header';
-import {setToLocalStorage, getFromLocalStorage} from '../../utils/'
 import { OAuth } from '../OAuth';
 import { ProtectedRoute } from '../ProtectedRoute';
 import { AppRoute, routes, ROUTES_URLS, } from './routes';
 
-import { Route, Link, Switch, Redirect, RouteChildrenProps, withRouter, RouteComponentProps } from 'react-router-dom'
+import { Route, Switch, Redirect, RouteChildrenProps, withRouter, RouteComponentProps } from 'react-router-dom'
 
 import '../../styles/bace.scss'
 import styles from '../../styles/app.module.scss';
+import { init } from '../../store/initialization';
+import { connect } from 'react-redux';
 
-
-
-const TOKEN_STORAGE_KEY = 'TOKEN'
-
-const {REACT_APP_APY_KEY} = process.env
 
 export interface Board {
     id: string;
@@ -30,7 +26,7 @@ interface AppState {
 }
 
 interface AppProps extends RouteComponentProps {
-
+    onInit: () => void;
 }
 
 interface CustomToken {
@@ -45,55 +41,11 @@ const INITIAL_STATE = {
 }
 
 class App extends React.Component<AppProps, AppState> {
-    public state = INITIAL_STATE
+    public state = INITIAL_STATE;
 
-    componentDidMount() {
-        this.getToken()
-               
-    }
-
-    
-
-    private async getToken() {
-        // if(this.state.token) {
-        //     return
-        // }
-
-        // const {token} = getFromLocalStorage<CustomToken>(TOKEN_STORAGE_KEY)
-        // if(!token) {
-        //     return this.toLogin()
-        // }
-
-        // const url = `https://api.trello.com/1/members/me?key=${REACT_APP_APY_KEY}&token=${token}`
-        // const repsonse = await fetch(url);
-        // if(repsonse.ok === true && repsonse.status === 200) {
-        //     const userProfile = await repsonse.json()
-        //     this.setProfile(userProfile)
-        //     return this.toDashBoard()
-        // }
-
-        // return this.toLogin()
-    }
-
-    private toDashBoard() {
-        this.props.history.push(ROUTES_URLS.DASHBOARD)
-    }
-
-    private toLogin() {
-        this.props.history.push(ROUTES_URLS.LOGIN)
-    }
-
-    private setProfile(userProfile: any) {
-        this.setState({userProfile})
-    }
-
-
-
-
-    private get isLoggedIn() {
-        return !!this.state.token
-    }
-
+    componentWillMount() {
+        this.props.onInit();
+      }
 
     private renderContent() {
         return <main className={styles.main}>
@@ -135,6 +87,12 @@ class App extends React.Component<AppProps, AppState> {
     }
 }
 
-const AppWithRouter = withRouter(App);
+const mapDispathToProps = (dispatch: any) => {
+    return {
+      onInit: () => dispatch(init())
+    };
+  };
 
-export {AppWithRouter as App};
+const AppWithRouter = withRouter(connect(undefined, mapDispathToProps)(App));
+
+export { AppWithRouter as App };

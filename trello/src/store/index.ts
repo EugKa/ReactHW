@@ -3,6 +3,8 @@ import counter, { CounterState } from './counter';
 import auth, { AuthState, authMiddlewares } from './auth';
 import boards, { boardsMiddlawre } from './boards';
 import user,{ userProfileMiddleware } from './userProfile';
+import service, { serviceMiddleware, ServiceState } from './service';
+import { initMiddleware } from './initialization';
 
 
 export interface AppState {
@@ -10,6 +12,7 @@ export interface AppState {
   auth: AuthState;
   boards?: any;
   user?: any;
+  service: ServiceState
 }
 
 // @ts-ignore
@@ -24,13 +27,14 @@ export default function configureStore() {
       auth,
       boards,
       user,
+      service,
       
   });
 
   return createStore(
     rootReducer,
     undefined,
-    composeEnhancers(applyMiddleware(...authMiddlewares, ...boardsMiddlawre, ...userProfileMiddleware))
+    composeEnhancers(applyMiddleware(...authMiddlewares, ...boardsMiddlawre, ...userProfileMiddleware, ...serviceMiddleware, ...initMiddleware))
   );
 }
 

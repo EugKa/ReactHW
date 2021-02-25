@@ -8,7 +8,7 @@ export interface AuthState {
   token: string;
 }
 
-export default (state: AuthState = INITIAL_STATE, { type, payload }: any) => {
+const authReducer = (state: AuthState = INITIAL_STATE, { type, payload }: any) => {
   switch (type) {
     case ACTION_TYPES.SET_TOKEN:
       return { ...state, token: payload };
@@ -16,4 +16,7 @@ export default (state: AuthState = INITIAL_STATE, { type, payload }: any) => {
       return state;
   }
 };
+
+export default authReducer
+
     

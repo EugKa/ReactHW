@@ -22,6 +22,7 @@ const fetchDataBoards: any = async ({dispatch,  state }:{dispatch:any, state: an
 }
 const boardsMiddleware = ({ dispatch, getState}: any) => (next:any) => (action:any) => {
     const state = getState()
+
     if (action.type === ACTION_TYPES.DATABOARD) {
       fetchDataBoards({dispatch, state})
     } else {
@@ -31,4 +32,5 @@ const boardsMiddleware = ({ dispatch, getState}: any) => (next:any) => (action:a
 }
 
 export const boardsMiddlawre = [boardsMiddleware]
-
+//id 6026be4746606b375f546224
+//https://api.trello.com/1/boards/6026be4746606b375f546224/cards?key=63e14cc212fae521ee2c6f0dcf5d8cc1&token=297f6ca37c049791c5679b38b81ea83311e1db27b70bc89e5d133eaf718b0e6b
