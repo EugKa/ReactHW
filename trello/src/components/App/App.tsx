@@ -8,8 +8,7 @@ import { Route, Switch, Redirect, RouteChildrenProps, withRouter, RouteComponent
 
 import '../../styles/bace.scss'
 import styles from '../../styles/app.module.scss';
-import { init } from '../../store/initialization';
-import { connect } from 'react-redux';
+
 
 
 export interface Board {
@@ -25,13 +24,8 @@ interface AppState {
     userProfile: any
 }
 
-interface AppProps extends RouteComponentProps {
-    onInit: () => void;
-}
+interface AppProps  { }
 
-interface CustomToken {
-    token: string, expireIn: number;
-}
 
 const INITIAL_STATE = {
     token: '',
@@ -43,9 +37,6 @@ const INITIAL_STATE = {
 class App extends React.Component<AppProps, AppState> {
     public state = INITIAL_STATE;
 
-    componentWillMount() {
-        this.props.onInit();
-      }
 
     private renderContent() {
         return <main className={styles.main}>
@@ -87,12 +78,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 }
 
-const mapDispathToProps = (dispatch: any) => {
-    return {
-      onInit: () => dispatch(init())
-    };
-  };
 
-const AppWithRouter = withRouter(connect(undefined, mapDispathToProps)(App));
 
-export { AppWithRouter as App };
+
+export {App} ;

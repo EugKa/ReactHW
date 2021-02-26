@@ -1,0 +1,4 @@
+export enum ACTION_TYPES {
+    DATALISTS="@@LISTS/DATA_LISTS",
+    SET_LISTS= "@@LISTS/SET_LISTS"
+}

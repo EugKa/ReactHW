@@ -6,17 +6,20 @@ import { BrowserRouter } from 'react-router-dom'
 
 import {Provider} from 'react-redux'
 import configureStore from './store';
+import { createBrowserHistory } from 'history';
+import { init } from './store/initialization';
+import { ConnectedRouter } from 'connected-react-router';
 
 
 
 
-
-const store = configureStore()
-
+const history = createBrowserHistory()
+const store = configureStore(history)
+store.dispatch(init())
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
+        <ConnectedRouter history={history}>
             <App />
-        </BrowserRouter>
+        </ConnectedRouter>
     </Provider>, document.querySelector('#root'))

@@ -5,6 +5,7 @@ import { NotFound } from '../NotFound'
 import {Redirect, RouteChildrenProps} from 'react-router-dom'
 import { OAuth } from '../OAuth'
 import { UserPage } from '../UserPage'
+import { BoardDetails } from '../BoardDetails'
 
 export enum ROUTES_URLS {
     LOGIN = '/login',
@@ -12,7 +13,8 @@ export enum ROUTES_URLS {
     OAUTH = '/oauth',
     NOT_FOUND = '/404',
     HOME = '/',
-    USER_PAGE = '/user'
+    USER_PAGE = '/user',
+    BOARD_DETAILS = '/details'
 
 }
  
@@ -41,6 +43,12 @@ export const routes: Array<AppRoute> = [
         path: ROUTES_URLS.USER_PAGE,
         render: (props: RouteChildrenProps) => <UserPage {...props}/>,
         title: 'UserPage',
+        isProtected: true
+    },
+    {
+        path: ROUTES_URLS.BOARD_DETAILS,
+        render: (props: RouteChildrenProps) => <BoardDetails {...props}/>,
+        title: 'BoardDetails',
         isProtected: true
     },
     {

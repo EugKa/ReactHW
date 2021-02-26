@@ -1,10 +1,14 @@
 import { combineReducers, compose, createStore, applyMiddleware } from 'redux';
 import counter, { CounterState } from './counter';
 import auth, { AuthState, authMiddlewares } from './auth';
-import boards, { boardsMiddlawre } from './boards';
+import boards, { boardsMiddleware } from './boards';
 import user,{ userProfileMiddleware } from './userProfile';
 import service, { serviceMiddleware, ServiceState } from './service';
 import { initMiddleware } from './initialization';
+import connectRouter from './router';
+import { History } from 'history';
+import lists, { listsMiddleware } from './lists';
+
 
 
 export interface AppState {
@@ -12,7 +16,10 @@ export interface AppState {
   auth: AuthState;
   boards?: any;
   user?: any;
-  service: ServiceState
+  service: ServiceState;
+  router?: any;
+  lists?: any
+  
 }
 
 // @ts-ignore
@@ -21,20 +28,29 @@ const t = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const composeEnhancers =
   process.env.NODE_ENV !== 'production' && t ? t : compose;
 
-export default function configureStore() {
+export default function configureStore(history: History) {
   const rootReducer = combineReducers<AppState>({
+      router: connectRouter(history),
       counter,
       auth,
       boards,
       user,
       service,
+      lists
       
   });
 
   return createStore(
     rootReducer,
     undefined,
-    composeEnhancers(applyMiddleware(...authMiddlewares, ...boardsMiddlawre, ...userProfileMiddleware, ...serviceMiddleware, ...initMiddleware))
+    composeEnhancers(applyMiddleware(
+      ...authMiddlewares, 
+      ...boardsMiddleware, 
+      ...userProfileMiddleware, 
+      ...serviceMiddleware, 
+      ...initMiddleware,
+      ...listsMiddleware
+      ))
   );
 }
 
