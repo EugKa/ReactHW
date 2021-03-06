@@ -3,3 +3,4 @@ import { History } from "history";
 
 export default (history: History): any => (connectRouter(history))
 export * from './actions'
+export * from './selectors'

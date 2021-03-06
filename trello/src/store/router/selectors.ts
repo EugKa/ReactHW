@@ -1,4 +1,4 @@
-import { AppState } from "..";
+import { AppState } from "../";
 
 export const getPathName = (state: AppState) => state.router.location.pathname;
 export const getSegments = (state: AppState) => {

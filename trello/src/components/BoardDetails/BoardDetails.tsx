@@ -19,6 +19,13 @@ interface ListsProps extends RouteChildrenProps<{id: string}> {
 class BoardDetails extends React.Component<ListsProps> {
     componentDidMount() {
         console.log(this.props.match?.params.id)
+    
+        const queryParams = this.props.location.search.split('?')[1].split('&');
+        console.log(queryParams.reduce((items, paramString) => {
+            const [key, value] = paramString.split('=')
+            items[key] = value
+            return items
+        }, {} as any))
         this.props.getLists!(this.props.match?.params.id)
         this.props.getCards!(this.props.match?.params.id)
     }
