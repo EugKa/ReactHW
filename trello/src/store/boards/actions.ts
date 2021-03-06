@@ -1,7 +1,7 @@
 import { ACTION_TYPES } from "./types"
 
 export const getDataBoards = () => ({
-    type: ACTION_TYPES.DATABOARD,
+    type: ACTION_TYPES.DATA_BOARD,
     
 })
 

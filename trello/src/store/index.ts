@@ -8,8 +8,7 @@ import { initMiddleware } from './initialization';
 import connectRouter from './router';
 import { History } from 'history';
 import lists, { listsMiddleware } from './lists';
-
-
+import cards, { cardsMiddleware } from './cards';
 
 export interface AppState {
   counter: CounterState;
@@ -19,7 +18,7 @@ export interface AppState {
   service: ServiceState;
   router?: any;
   lists?: any
-  
+  cards?: any
 }
 
 // @ts-ignore
@@ -36,8 +35,8 @@ export default function configureStore(history: History) {
       boards,
       user,
       service,
-      lists
-      
+      lists,
+      cards
   });
 
   return createStore(
@@ -49,7 +48,8 @@ export default function configureStore(history: History) {
       ...userProfileMiddleware, 
       ...serviceMiddleware, 
       ...initMiddleware,
-      ...listsMiddleware
+      ...listsMiddleware,
+      ...cardsMiddleware
       ))
   );
 }

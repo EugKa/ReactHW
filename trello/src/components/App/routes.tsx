@@ -6,6 +6,7 @@ import {Redirect, RouteChildrenProps} from 'react-router-dom'
 import { OAuth } from '../OAuth'
 import { UserPage } from '../UserPage'
 import { BoardDetails } from '../BoardDetails'
+import { Board } from '../Board'
 
 export enum ROUTES_URLS {
     LOGIN = '/login',
@@ -45,11 +46,19 @@ export const routes: Array<AppRoute> = [
         title: 'UserPage',
         isProtected: true
     },
+    // {
+    //     path: ROUTES_URLS.DASHBOARD ,
+    //     render: (props: RouteChildrenProps) => <Board {...props}/>,
+    //     title: 'BoardDetails',
+    //     isProtected: true,
+    //     isHidden: true,
+    // },
     {
         path: ROUTES_URLS.BOARD_DETAILS,
         render: (props: RouteChildrenProps) => <BoardDetails {...props}/>,
         title: 'BoardDetails',
-        isProtected: true
+        isProtected: true,
+        isHidden:true
     },
     {
         path: ROUTES_URLS.HOME,

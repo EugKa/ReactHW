@@ -1,0 +1,4 @@
+export enum ACTION_TYPES {
+    DATA_CARDS="@@CARDS/DATA_CARDS",
+    SET_CARDS= "@@CARDS/SET_CARDS"
+}
