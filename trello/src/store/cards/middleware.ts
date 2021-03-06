@@ -7,8 +7,9 @@ import {ACTION_TYPES} from './types'
 
 
 
-const fetchCardsWorker: any = ({dispatch}: {dispatch: any}, id:any ) => {
-  console.log(id);
+const fetchCardsWorker: any = ({dispatch, action}: {dispatch: any, action: {type: string; payload: string}}) => {
+  console.log('+=====', action);
+  const id = action.payload
   return dispatch(
     request({
       path: `/1/boards/${id}/cards?`,
@@ -24,7 +25,7 @@ const fetchCardsWorker: any = ({dispatch}: {dispatch: any}, id:any ) => {
   );
 };
 
-const fetchMiddleware = ({ dispatch }: any) => (next: any) =>
+const fetchMiddleware = ({ dispatch, action }: any) => (next: any) =>
   subscribe(ACTION_TYPES.DATA_CARDS, fetchCardsWorker)(next, dispatch);
 
 export const cardsMiddleware = [fetchMiddleware];

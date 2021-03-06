@@ -16,7 +16,7 @@ export const Board = ({name, id, prefs}: boardProps) => {
             backgroundColor: prefs.backgroundColor
         }
         
-        return <Link id={id} className={styles.link} to={ROUTES_URLS.BOARD_DETAILS}>
+        return <Link id={id} className={styles.link} to={`${ROUTES_URLS.BOARD_DETAILS}/${id}`}>
             <div  className={styles.board} style={boardStyles}>{name}</div>
         </Link>
     

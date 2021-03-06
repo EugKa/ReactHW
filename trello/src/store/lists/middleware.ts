@@ -5,7 +5,9 @@ import { request } from "../service";
 import { setLists } from "./actions";
 import {ACTION_TYPES} from './types'
 
-const fetchListsWorker: any = ({dispatch}: {dispatch: any}, id:string):Promise<boardProps> => {
+const fetchListsWorker: any = ({dispatch, action}: {dispatch: any, action: {type: string; payload: string}  }):Promise<boardProps> => {
+  console.log('!!!!', action);
+  const id = action.payload
   return dispatch(
     request({
       path: `/1/boards/${id}/lists?`,

@@ -6,22 +6,22 @@ import { getDataCards, getCards } from '../../store/cards'
 import { getDataLists, getLists } from '../../store/lists'
 import styles from '../../styles/boardDetails.module.scss'
 
-interface ListsProps extends RouteChildrenProps {
+interface ListsProps extends RouteChildrenProps<{id: string}> {
     lists?: Array<any>
     cards?: Array<any>
     filtCard?: Array<any>  
-    getLists?: () => void
-    getCards?: () => void
+    getLists?: (id?: string) => void
+    getCards?: (id?: string) => void
     
 
 }
 
 class BoardDetails extends React.Component<ListsProps> {
     componentDidMount() {
-        this.props.getLists!()
-        this.props.getCards!()
+        console.log(this.props.match?.params.id)
+        this.props.getLists!(this.props.match?.params.id)
+        this.props.getCards!(this.props.match?.params.id)
     }
-
 
     render() {
         const {cards, lists} = this.props;
@@ -54,8 +54,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch:any) => {
     return {
-        getLists: () => dispatch(getDataLists()),
-        getCards: () => dispatch(getDataCards())
+        getLists: (id?: string) => dispatch(getDataLists(id as any)),
+        getCards: (id?: string) => dispatch(getDataCards(id as any))
     }
 }
 

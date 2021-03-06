@@ -15,7 +15,7 @@ export enum ROUTES_URLS {
     NOT_FOUND = '/404',
     HOME = '/',
     USER_PAGE = '/user',
-    BOARD_DETAILS = '/details'
+    BOARD_DETAILS = '/board'
 
 }
  
@@ -54,8 +54,8 @@ export const routes: Array<AppRoute> = [
     //     isHidden: true,
     // },
     {
-        path: ROUTES_URLS.BOARD_DETAILS,
-        render: (props: RouteChildrenProps) => <BoardDetails {...props}/>,
+        path: `${ROUTES_URLS.BOARD_DETAILS}/:id` as any,
+        render: (props: RouteChildrenProps<{id: string}>) => <BoardDetails {...props}/>,
         title: 'BoardDetails',
         isProtected: true,
         isHidden:true

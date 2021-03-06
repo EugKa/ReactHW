@@ -1,7 +1,8 @@
 import { ACTION_TYPES } from "./types"
 
-export const getDataCards = () => ({
+export const getDataCards = (id: string) => ({
     type: ACTION_TYPES.DATA_CARDS,
+    payload: id
     
 })
 
