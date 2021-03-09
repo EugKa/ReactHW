@@ -1,6 +1,7 @@
 
 
 import { subscribe } from "../../utils";
+import { getToken } from "../auth";
 import { request } from "../service";
 import { addCard, setCards } from "./actions";
 import {ACTION_TYPES} from './types'
@@ -11,8 +12,8 @@ const fetchCardsWorker: any = ({dispatch, action}:  {dispatch: any, action: {typ
   const id = action.payload
   return dispatch(
     request({
-      // method:'GET',
       path: `/1/boards/${id}/cards?`,
+      // method:'GET',
       authRequired: true,
       onSuccess: data => {
         console.log("cards", data);
@@ -25,8 +26,10 @@ const fetchCardsWorker: any = ({dispatch, action}:  {dispatch: any, action: {typ
   );
 };
 
-const addCardWorker:any = ({dispatch, action} :  {dispatch: any, action:any}) => {
+const addCardWorker:any = ({dispatch, action, getState} :  {dispatch: any, action:any, getState:any}) => {
   console.log(action);
+  const appState = getState!()
+  const token = getToken(appState)
   const id = action.payload.id
   const name = action.payload.name
   const requestOptions = {
@@ -35,7 +38,7 @@ const addCardWorker:any = ({dispatch, action} :  {dispatch: any, action:any}) =>
     body: JSON.stringify({ name: name})
   };
   
-  fetch(`https://api.trello.com/1/cards?key=${REACT_APP_APY_KEY}&token=63a5223d8bc1f3168394bccb5803fccd6d96baf3b09c3bb4699512d701866541&idList=${id}'`, requestOptions)
+  fetch(`https://api.trello.com/1/cards?key=${REACT_APP_APY_KEY}&token=${token}&idList=${id}'`, requestOptions)
       .then(response => response.json())
       .then(data => dispatch(addCard(data)));
   }

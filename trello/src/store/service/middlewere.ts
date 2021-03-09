@@ -5,7 +5,7 @@ import { ActionService, ACTION_TYPES } from "./types";
 
 const requestWorker: Worker<any> = async ({action, next, getState}) => {
  // const requestId = uuid()
- const {path, onSuccess, method, authRequired} = action;
+ const {path,method, onSuccess,  authRequired} = action;
   const appState = getState!()
   const token = getToken(appState)
 

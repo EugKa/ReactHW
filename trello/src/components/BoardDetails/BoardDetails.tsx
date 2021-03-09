@@ -20,14 +20,9 @@ interface ListState {
     // handleSubmit?:(text?:string) =>void
 }
 
-
-
-
 class BoardDetails extends React.Component<ListsProps, ListState> {
 
     componentDidMount() {
-        console.log(this.props.match?.params.id)
-    
         // const queryParams = this.props.location.search.split('?')[1].split('&');
         // console.log(queryParams.reduce((items, paramString) => {
         //     const [key, value] = paramString.split('=')
@@ -38,8 +33,12 @@ class BoardDetails extends React.Component<ListsProps, ListState> {
         this.props.getCards!(this.props.match?.params.id)
     }
 
-    handleSubmit =(text:string, id:any) => {
+    handleSubmit = (text:string, id:any) => {
         console.log('----text',text,'----id', id);
+        addCard({   
+                    idList:id,
+                    name:text
+                })
     }
 
 

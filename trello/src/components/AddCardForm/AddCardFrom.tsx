@@ -2,10 +2,9 @@ import React from 'react';
 import styles from '../../styles/boardDetails.module.scss'
 import  '../../styles/boardDetails.module.scss'
 import { RouteChildrenProps } from 'react-router';
-import { addCard } from '../../store/cards';
 
 
-interface FormProps  {
+interface FormProps extends RouteChildrenProps  {
     handleSubmit:(text:string, id:any) =>void
     id?:any
 }
@@ -45,21 +44,31 @@ export class AddCardForm extends React.Component<FormProps,FormState> {
     render() {
         const {id} = this.props
         return  <div className="add-card" >
-            {this.state.activeForm ? <form className={styles.form} 
-                                            onSubmit={(e:any)=>
-                                            this.onSubmitForm(e,id)}>
-            <textarea className={styles.textarea} 
-                        name="text"
-                        placeholder="Ввести заголовок для этой карточки"
-                        onChange={this.onChange}
-                        value={this.state.name}
-                        >
-            </textarea>
+            {this.state.activeForm ? 
+            <form className={styles.form} 
+                    onSubmit={(e:any)=>
+                    this.onSubmitForm(e,id)}>
+                <textarea 
+                    className={styles.textarea} 
+                    name="text"
+                    placeholder="Ввести заголовок для этой карточки"
+                    onChange={this.onChange}
+                    value={this.state.name}
+                />
+                
             <div className={styles.btnWrapper}>
-                <button type='submit' className={styles.submitBtn}>Добавить карточку</button>
-                <button onClick={this.onFormChange} className={styles.closeBtn}>X</button>
+                <button type='submit' 
+                        className={styles.submitBtn}>Добавить карточку
+                </button>
+                <button onClick={this.onFormChange} 
+                        className={styles.closeBtn}>X
+                </button>
             </div>
-        </form> :<button onClick={this.onFormChange} className={styles.addCardBtn}>+ Добавить еще одну карточку</button>}
+            </form>:<button onClick={this.onFormChange} 
+                            className={styles.addCardBtn}>+ Добавить еще одну карточку
+                    </button>
+            }
+
     </div>   
     }
 }
