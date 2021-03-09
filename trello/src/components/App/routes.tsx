@@ -46,13 +46,6 @@ export const routes: Array<AppRoute> = [
         title: 'UserPage',
         isProtected: true
     },
-    // {
-    //     path: ROUTES_URLS.DASHBOARD ,
-    //     render: (props: RouteChildrenProps) => <Board {...props}/>,
-    //     title: 'BoardDetails',
-    //     isProtected: true,
-    //     isHidden: true,
-    // },
     {
         path: `${ROUTES_URLS.BOARD_DETAILS}/:id` as any,
         render: (props: RouteChildrenProps<{id: string}>) => <BoardDetails {...props}/>,
