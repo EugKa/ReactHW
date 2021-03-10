@@ -15,5 +15,20 @@ export const addCard = (data:any) => ({
     payload:data
 })
 
+export const successAddedCard = (data:any) => ({
+    type:ACTION_TYPES.SUCCESS_ADDED_CARD,
+    payload:data
+})
+
+export const deleteCard = (id:string) => ({
+    type:ACTION_TYPES.DELETE_CARD,
+    payload:id
+})
+
+export const successDeletedCard = (id:any) => ({
+    type:ACTION_TYPES.SUCCESS_DELETE_CARD,
+    payload:id
+})
+
 
 

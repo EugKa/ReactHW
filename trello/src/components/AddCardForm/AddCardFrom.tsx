@@ -12,9 +12,7 @@ interface FormProps extends RouteChildrenProps  {
 interface FormState {
     activeForm?:boolean
     name?:string,
-    e?:any,
-    
-    
+    e?:any, 
 }
 
 export class AddCardForm extends React.Component<FormProps,FormState> {

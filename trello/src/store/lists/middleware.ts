@@ -4,7 +4,6 @@ import { setLists } from "./actions";
 import {ACTION_TYPES} from './types'
 
 const fetchListsWorker: any = ({dispatch, action}: {dispatch: any, action: {type: string; payload: string}  }) => {
-  console.log('!!!!', action);
   const id = action.payload
   return dispatch(
     request({

@@ -2,50 +2,43 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteChildrenProps } from 'react-router-dom'
 import { AppState } from '../../store'
-import { getDataCards, getCards, addCard } from '../../store/cards'
+import { getDataCards, getCards, deleteCard, addCard } from '../../store/cards'
 import { getDataLists, getLists } from '../../store/lists'
 import styles from '../../styles/boardDetails.module.scss'
 import { AddCardForm } from '../AddCardForm'
+import { Card } from '../Card'
 
 interface ListsProps extends RouteChildrenProps<{id: string}> {
     lists?: Array<any>
     cards?: Array<any>
-    // filtCard?: Array<any>  
     getLists?: (id?: string) => void
     getCards?: (id?: string) => void
-    handleSubmit?:(text?:string, id?:any) =>void
+    deleteCard: (id:string) => void
+    addCard:(data:any) => void
+    // handleSubmit?:(text?:string, id?:any) =>void
 }
 
-interface ListState {
-    // handleSubmit?:(text?:string) =>void
-}
 
-class BoardDetails extends React.Component<ListsProps, ListState> {
 
+class BoardDetails extends React.Component<ListsProps> {
+    
     componentDidMount() {
-        // const queryParams = this.props.location.search.split('?')[1].split('&');
-        // console.log(queryParams.reduce((items, paramString) => {
-        //     const [key, value] = paramString.split('=')
-        //     items[key] = value
-        //     return items
-        // }, {} as any))
         this.props.getLists!(this.props.match?.params.id)
         this.props.getCards!(this.props.match?.params.id)
+
     }
-
-    handleSubmit = (text:string, id:any) => {
-        console.log('----text',text,'----id', id);
-        addCard({   
-                    idList:id,
-                    name:text
-                })
+    
+    onDelete = (id:string) => {
+        this.props.deleteCard(id)
+        
     }
-
-
-
+    
+    handleSubmit = (name:string, idList:any) => {
+        this.props.addCard({name,idList})
+        
+    }
     render() {
         
-
         const {cards, lists} = this.props;
         return <div className={styles.boardDetails}>
             <h2>BoardDetails</h2>
@@ -57,10 +50,10 @@ class BoardDetails extends React.Component<ListsProps, ListState> {
                             <div className="card-wrapper">
                                 {cards!.map((card) => {
                                     if(list.id === card.idList) {
-                                        return  <div key={card.id} 
-                                                    className={styles.card}>
-                                                    {card.name}
-                                                </div>
+                                        return  <Card key={card.id} 
+                                                        dataCard={card}
+                                                        onDelete={()=>this.onDelete(card.id)}
+                                                    />
                                     }  
                                 })}
                             </div>
@@ -68,8 +61,7 @@ class BoardDetails extends React.Component<ListsProps, ListState> {
                                         handleSubmit={(text:string, id:any)=> 
                                         this.handleSubmit(text, id)}
                             />
-                    </div> 
-                       
+                    </div>  
                 }) 
             }  
             </div>
@@ -89,6 +81,8 @@ const mapDispatchToProps = (dispatch:any) => {
     return {
         getLists: (id?: string) => dispatch(getDataLists(id as any)),
         getCards: (id?: string) => dispatch(getDataCards(id as any)),
+        deleteCard: (id?:string) => dispatch(deleteCard(id as any)),
+        addCard:(data?:any) => dispatch(addCard(data as any))
 
     }
 }

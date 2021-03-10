@@ -7,6 +7,8 @@
   border-radius: 5px;
   width: 210px;
   min-height: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .boardDetails {
@@ -73,4 +75,11 @@
   border-radius: 2px;
   color: #fff;
   padding: 5px 15px;
+}
+
+.deleteBtn {
+  outline: none;
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
 }
