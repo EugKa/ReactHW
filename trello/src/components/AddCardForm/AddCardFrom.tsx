@@ -37,6 +37,7 @@ export class AddCardForm extends React.Component<FormProps,FormState> {
     onSubmitForm = (e:any, id:any) => {
         e.preventDefault();
         this.props.handleSubmit(this.state.name, id)
+        this.setState({name: ''})
     }
     
     render() {
