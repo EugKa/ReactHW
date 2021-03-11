@@ -13,7 +13,7 @@ interface ListsProps extends RouteChildrenProps<{ id: string }> {
     cards?: Array<any>
     getLists?: (id?: string) => void
     getCards?: (id?: string) => void
-    deleteCard: (id: string) => string
+    deleteCard: (id: string) => void
     addCard: (data: any) => void
     // handleSubmit?:(text?:string, id?:any) =>void
 }

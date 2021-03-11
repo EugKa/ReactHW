@@ -27,8 +27,9 @@ const cardsReducer = (state: CardsState = INITIAL_STATE, { type, payload }: any)
       //   {...state.cards.filter(card => card !== payload.id)}
       // ]
       // return delItem
-      return {...state, cards: state.cards.filter((card) => card !== payload
-      )}
+      return {...state, cards: state.cards.filter((el) => {
+        return el.id !== payload.id;
+      })}
       
 
     default:

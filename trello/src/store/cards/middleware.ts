@@ -25,37 +25,24 @@ const fetchCardsWorker: any = ({dispatch, action}:  {dispatch: any, action: {typ
   );
 };
 
-const deleteCardWorker: any = ({dispatch, action, getState}:  {getState:any, dispatch: any, action: {type: string; payload: string}}) => {
+const deleteCardWorker: any = ({dispatch, action}:  {dispatch: any, action: {type: string; payload: string}}) => {
   console.log('deleteCardAction', action);
   const id = action.payload
-  // return dispatch(
-  //   request({
-  //     path: `/1/cards/${id}?`,
-  //     method:'DELETE',
-  //     authRequired: true,
-  //     onSuccess: req => {
-  //       console.log("delete", req);
-  //       dispatch(successDeletedCard(req));
-  //     },
-  //     onError: error => {
-  //       console.log(error);
-  //     }
-  //   })
-  // );
-
-  const appState = getState!()
-  const token = getToken(appState)
-
-  const requestOptions = {
-    method: 'DELETE',
-  }
-  
-  fetch(`https://api.trello.com/1/cards/${id}?key=${REACT_APP_APY_KEY}&token=${token}`, requestOptions)
-    .then(response => {
-      console.log("delete", response);
-      dispatch(successDeletedCard(response))
+  return dispatch(
+    request({
+      path: `/1/cards/${id}?`,
+      method:'DELETE',
+      authRequired: true,
+      onSuccess: req => {
+        console.log("delete", id);
+        dispatch(successDeletedCard({id}));
+      },
+      onError: error => {
+        console.log(error);
+      }
     })
-    .catch(err => console.error(err));
+  );
+
 };
 
 const addCardWorker:any = ({dispatch, action, getState} :  {dispatch: any, action:any, getState:any}) => {
