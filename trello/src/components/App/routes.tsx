@@ -33,6 +33,7 @@ export const routes: Array<AppRoute> = [
         path: ROUTES_URLS.LOGIN,
         render: (props: any) => <Login {...props}/>,
         title: 'Login',
+        isHidden:true
     },
     {
         path: ROUTES_URLS.DASHBOARD,
@@ -44,7 +45,9 @@ export const routes: Array<AppRoute> = [
         path: ROUTES_URLS.USER_PAGE,
         render: (props: RouteChildrenProps) => <UserPage {...props}/>,
         title: 'UserPage',
-        isProtected: true
+        isProtected: true,
+        isHidden:true
+        
     },
     {
         path: `${ROUTES_URLS.BOARD_DETAILS}/:id` as any,

@@ -51,16 +51,16 @@ const addCardWorker:any = ({dispatch, action, getState} :  {dispatch: any, actio
   const appState = getState!()
   const token = getToken(appState)
   
-  const id = action.payload.idList
+  const idList = action.payload.idList
   const name = action.payload.name
-
+  
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: name, idList:id })
+    body: JSON.stringify({ name: name, idList:idList })
   };
   
-  fetch(`https://api.trello.com/1/cards?key=${REACT_APP_APY_KEY}&token=${token}&idList=${id}`, requestOptions)
+  fetch(`https://api.trello.com/1/cards?key=${REACT_APP_APY_KEY}&token=${token}&idList=${idList}`, requestOptions)
       .then(response => response.json())
       .then(data => dispatch(successAddedCard(data))
       );

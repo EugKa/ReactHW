@@ -15,10 +15,11 @@ interface ListsProps extends RouteChildrenProps<{ id: string }> {
     getCards?: (id?: string) => void
     deleteCard: (id: string) => void
     addCard: (data: any) => void
-    // handleSubmit?:(text?:string, id?:any) =>void
 }
-
-
+type cardData = {
+    name: string,
+    idList:string
+}
 
 class BoardDetails extends React.Component<ListsProps> {
 
@@ -38,7 +39,7 @@ class BoardDetails extends React.Component<ListsProps> {
 
     }
     render() {
-
+        
         const { cards, lists } = this.props;
         return <div className={styles.boardDetails}>
             <h2>BoardDetails</h2>
@@ -82,7 +83,7 @@ const mapDispatchToProps = (dispatch: any) => {
         getLists: (id?: string) => dispatch(getDataLists(id as any)),
         getCards: (id?: string) => dispatch(getDataCards(id as any)),
         deleteCard: (id: string) => dispatch(deleteCard(id)),
-        addCard: (data?: any) => dispatch(addCard(data as any))
+        addCard: (data: cardData) => dispatch(addCard(data as cardData))
 
     }
 }

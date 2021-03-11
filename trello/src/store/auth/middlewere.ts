@@ -22,11 +22,24 @@ const readTokenWorker = ({action, next, dispatch}: any) => {
   next(action);
 }
 
+const logOutWorker = ({ action, next, dispatch }: any) => {
+  dispatch(setToken(''));
+  dispatch(navigate(ROUTES_URLS.HOME));
+  next(action);
+};
+
 
 const readTokenMiddleware =({dispatch}: any) => (next: any) => 
   subscribe(ACTION_TYPES.READ_TOKEN, readTokenWorker)(next, dispatch)
 
 const setTokenMiddleware = ({dispatch} :any) => (next:any) => 
 subscribe(ACTION_TYPES.SET_TOKEN, setTokenWorker)(next, dispatch)
+
+const logOutMiddleware = ({ dispatch }: any) => (next: any) =>
+  subscribe(ACTION_TYPES.LOGOUT, logOutWorker)(next, dispatch);
   
-export const authMiddlewares = [setTokenMiddleware, readTokenMiddleware];
+export const authMiddlewares = [
+  setTokenMiddleware, 
+  readTokenMiddleware,
+  logOutMiddleware
+];

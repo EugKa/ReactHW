@@ -23,10 +23,6 @@ const cardsReducer = (state: CardsState = INITIAL_STATE, { type, payload }: any)
       return{...state, cards: [...state.cards, newItem]}
 
     case ACTION_TYPES.SUCCESS_DELETE_CARD:
-      // const delItem = [
-      //   {...state.cards.filter(card => card !== payload.id)}
-      // ]
-      // return delItem
       return {...state, cards: state.cards.filter((el) => {
         return el.id !== payload.id;
       })}

@@ -3,12 +3,14 @@ import React, { FunctionComponent } from 'react';
 import { Link } from './Link';
 import { routes, AppRoute } from '../App/routes';
 import styles from '../../styles/app.module.scss';
+import { logOut } from '../../store/auth';
+import { connect } from 'react-redux';
 
-interface Props {
+interface headerProps {
   onLogOut: () => void;
 }
 
-export const Header: FunctionComponent<Props> = ({ onLogOut }: Props) => {
+const Header: FunctionComponent<headerProps> = ({ onLogOut }: headerProps) => {
   return (
     <header className={styles.header}>
       <div>
@@ -17,9 +19,19 @@ export const Header: FunctionComponent<Props> = ({ onLogOut }: Props) => {
             <Link key={i} title={title} path={path}/>
           )
         )}
-        <Link title={'OAUTH'} path={'/oauth'} />
+        {/* <Link title={'OAUTH'} path={'/oauth'} /> */}
         <button onClick={onLogOut}>Log out</button>
       </div>
     </header>
   );
 };
+
+const mapDispatchToProps = (dispatch: any): headerProps => {
+  return {
+    onLogOut: () => dispatch(logOut())
+  };
+};
+
+const ConnectedHeader = connect(undefined, mapDispatchToProps)(Header);
+
+export {ConnectedHeader as Header}

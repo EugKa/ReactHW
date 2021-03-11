@@ -71,7 +71,7 @@ class App extends React.Component<AppProps, AppState> {
         return(
             <div className="page">
                 
-                <Header onLogOut={() => console.log('log')} />
+                <Header />
                 {this.renderContent()}   
             </div>
         )
