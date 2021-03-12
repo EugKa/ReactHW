@@ -42,7 +42,6 @@ class BoardDetails extends React.Component<ListsProps> {
         
         const { cards, lists } = this.props;
         return <div className={styles.boardDetails}>
-            <h2>BoardDetails</h2>
             <div className={styles.wrapper}>
                 {
                     lists!.map((list) => {

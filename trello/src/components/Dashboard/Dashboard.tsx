@@ -19,7 +19,6 @@ class DashBoard extends React.Component<DashBoardProps> {
         console.log(this.props.boards);
         
         return <div>
-                    <h1>DashBoard Page</h1> 
                     <div className={styles.boardWrapp}>
                         {this.props.boards!.map((item) => <Board key={item.id} {...item}/>)}
                     </div>
