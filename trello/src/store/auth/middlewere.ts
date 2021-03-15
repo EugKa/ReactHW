@@ -9,8 +9,8 @@ import { ACTION_TYPES } from "./types";
 const APP_TOKEN = 'CUSTOM_APP_TOKEN'
 
 const setTokenWorker = ({action, next, dispatch}: any)  => {
-  setToLocalStorage(APP_TOKEN, action.payload);
   dispatch(navigate(ROUTES_URLS.DASHBOARD));
+  setToLocalStorage(APP_TOKEN, action.payload);
   next(action)
 };
 
